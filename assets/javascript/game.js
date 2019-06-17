@@ -6,6 +6,8 @@
   var gem4 = {name: "gem4", value: 0};
   var gems = [gem1, gem2, gem3, gem4]
   var total = 0;
+  var losses = 0;
+  var wins = 0;
 $(document).ready(function() {
 
 
@@ -14,13 +16,21 @@ $(document).ready(function() {
 
   $(".card").on("click", function(e) {
     
-
     gems.forEach( function(gem) {
         if (gem.name === e.currentTarget.id) {
             total += gem.value;
         }
     });
     $("#score").text(total);
+    if (total > randomNumber) {
+        losses++;
+        $("#losses").text(`Losses: ${losses}`);
+        setGame();
+    } else if (total === randomNumber) {
+        wins++;
+        $("#wins").text(`wins: ${wins}`);
+        setGame();
+    }
   });
 });
 
@@ -32,6 +42,8 @@ var setGame = function() {
   gem4.value = createFromRandomNumberFromTo(1, 12);
   //sets random number to display
   $("#randomNumber").text(randomNumber);
+  total = 0;
+  $("#score").text(total);
 };
 
 var createFromRandomNumberFromTo = function(min, max) {
